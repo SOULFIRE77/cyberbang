@@ -1,0 +1,2 @@
+// Simplified Jetton root for TON
+int main() { return 0; }
