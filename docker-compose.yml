@@ -1,0 +1,29 @@
+version: '3.8'
+services:
+  postgres:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: cyberbang
+    ports:
+      - "5432:5432"
+  backend:
+    build: ./backend
+    environment:
+      - SUPABASE_URL=http://postgres:5432
+      - SUPABASE_KEY=postgres_password
+      - OPENAI_API_KEY
+      - NOTION_TOKEN
+      - NOTION_DATABASE_ID
+    depends_on:
+      - postgres
+    ports:
+      - "8000:8000"
+  frontend:
+    build: ./frontend
+    command: npm run dev
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
